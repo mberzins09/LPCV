@@ -1,3 +1,6 @@
+using LatvijasPastsMVC.Database;
+using Microsoft.EntityFrameworkCore;
+
 namespace LatvijasPastsMVC
 {
     public class Program
@@ -8,6 +11,8 @@ namespace LatvijasPastsMVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+            builder.Services.AddDbContext<LPDbContext>(options => options.UseSqlServer(
+                builder.Configuration.GetConnectionString("LPCV")));
 
             var app = builder.Build();
 
@@ -28,7 +33,7 @@ namespace LatvijasPastsMVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}");
+                pattern: "{controller=CV}/{action=Index}/{id?}");
 
             app.Run();
         }
