@@ -1,0 +1,38 @@
+﻿@model IEnumerable<LatvijasPasts.Core.Models.Cv>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Surname</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var cv in Model) {
+        <tr>
+            <td>@cv.Id</td>
+            <td>@(cv.PersonalData?.FirstName ?? "Default")</td>
+            <td>@(cv.PersonalData?.LastName ?? "Default")</td>
+            <td>
+                <a href="@Url.Action("Edit", "Cvs", new { id = cv.Id })" class="btn btn-primary">Edit</a>
+                <a href="@Url.Action("Details", "Cvs", new { id = cv.Id })" class="btn btn-info">Details</a>
+                <a href="@Url.Action("Delete", "Cvs", new { id = cv.Id })" class="btn btn-danger">Delete</a>
+
+             @*   <a asp-action="Edit" asp-route-id="@cv.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@cv.Id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@cv.Id">Delete</a> *@ 
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

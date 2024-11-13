@@ -1,0 +1,47 @@
+﻿@model LatvijasPasts.Core.Models.Cv
+
+<h1>Details</h1>
+
+<h3>Pamatdati</h3>
+<p>Vārds: @Model.PersonalData.FirstName</p>
+<p>Uzvārds: @Model.PersonalData.LastName</p>
+<p>Tālrunis: @Model.PersonalData.Phone</p>
+<p>E-pasts: @Model.PersonalData.Email</p>
+
+
+<h3>Adrese</h3>
+@if (Model.Address != null)
+{
+    <p>Valsts: @Model.Address.Country</p>
+    <p>Indekss: @Model.Address.ZipCode</p>
+    <p>Pilsēta: @Model.Address.City</p>
+    <p>Iela: @Model.Address.Street</p>
+}
+else
+{
+    <p>Address is undefined</p>
+}
+
+<h3>Izglītība</h3>
+@foreach (var ed in Model.Educations)
+{
+    <p>Izglītības iestāde: @ed.InstitutionName</p>
+    <p>Fakultāte: @ed.Faculty</p>
+    <p>Izglītības līmenis: @ed.EducationLevel</p>
+    <p>Statuss: @ed.Status</p>
+    <hr />
+}
+
+<h3>Darba pieredze</h3>
+@foreach (var ex in Model.WorkExperiences)
+{
+    <p>Uzņēmuma nosaukums: @ex.CompanyName</p>
+    <p>Ienemamais amats: @ex.Position</p>
+    <p>Slodzes apmērs: @ex.WorkLoad</p>
+    <hr />
+}
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

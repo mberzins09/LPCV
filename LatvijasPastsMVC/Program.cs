@@ -1,4 +1,4 @@
-using LatvijasPastsMVC.Database;
+using LatvijasPasts.Data;
 using Microsoft.EntityFrameworkCore;
 
 namespace LatvijasPastsMVC
@@ -33,7 +33,7 @@ namespace LatvijasPastsMVC
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=CV}/{action=Index}/{id?}");
+                pattern: "{controller=Home}/{action=Index}/{id?}");
 
             app.Run();
         }

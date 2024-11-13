@@ -1,4 +1,4 @@
-namespace LatvijasPastsMVC.Models
+﻿namespace LatvijasPastsMVC.Models
 {
     public class ErrorViewModel
     {

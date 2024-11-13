@@ -20,4 +20,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LatvijasPasts.Core\LatvijasPasts.Core.csproj" />
+    <ProjectReference Include="..\LatvijasPasts.Data\LatvijasPasts.Data.csproj" />
+    <ProjectReference Include="..\LatvijasPasts.Services\LatvijasPasts.Services.csproj" />
+  </ItemGroup>
+
 </Project>

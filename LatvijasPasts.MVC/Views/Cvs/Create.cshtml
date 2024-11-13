@@ -1,0 +1,105 @@
+﻿@model LatvijasPasts.Core.Models.Cv
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Cv</h4>
+<hr />
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="Name">Name:</label>
+        <input asp-for="PersonalData.FirstName" class="form-control" id="inputName" required placeholder="Enter Name" />
+    </div>
+    <div class="form-group">
+        <label for="Surname">Surname:</label>
+        <input asp-for="PersonalData.LastName" class="form-control" id="inputSurname" required placeholder="Enter Surname" />
+    </div>
+    <div class="form-group">
+        <label for="Phone">Phone number:</label>
+        <input asp-for="PersonalData.Phone" class="form-control" id="inputPhone" required placeholder="Enter phone number" />
+    </div>
+    <div class="form-group">
+        <label for="Email">Email:</label>
+        <input asp-for="PersonalData.Email" class="form-control" id="inputEmail" required type="email" placeholder="Enter email" />
+    </div>
+
+
+    <div class="form-group">
+        <label for="Country">Country:</label>
+        <input asp-for="Address.Country" class="form-control" id="inputCountry" required placeholder="Enter Country" />
+    </div>
+    <div class="form-group">
+        <label for="City">City:</label>
+        <input asp-for="Address.City" class="form-control" id="inputCity" required placeholder="Enter City" />
+    </div>
+    <div class="form-group">
+        <label for="Street">Street:</label>
+        <input asp-for="Address.Street" class="form-control" id="inputStreet" required placeholder="Enter Street" />
+    </div>
+    <div class="form-group">
+        <label for="ZipCode">ZipCode:</label>
+        <input asp-for="Address.ZipCode" class="form-control" id="inputZipCode" required placeholder="Enter ZipCode" />
+    </div>
+
+
+    @for (var i = 0; i < Model.Educations.Count; i++)
+    {
+        <div class="form-group">
+            <label asp-for="Educations[i].InstitutionName">Institution Name:</label>
+            <input asp-for="Educations[i].InstitutionName" class="form-control" required placeholder="Institution Name" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Educations[i].Faculty">Faculty:</label>
+            <input asp-for="Educations[i].Faculty" class="form-control" required placeholder="Faculty" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Educations[i].EducationLevel">Education Level:</label>
+            <input asp-for="Educations[i].EducationLevel" class="form-control" required placeholder="Education Level" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Educations[i].FieldOfStudy">Field Of Study:</label>
+            <input asp-for="Educations[i].FieldOfStudy" class="form-control" required placeholder="Field Of Study" />
+        </div>
+
+        <div class="form-group">
+            <label for="Education.Status">Status:</label>
+            <select asp-for="Educations[i].Status" class="form-control" id="selectEducationStatus" required>
+                <option value="Completed">Completed</option>
+                <option value="Dropped">Dropped</option>
+                <option value="In Progress">In Progress</option>
+            </select>
+        </div>
+    }
+
+    @for (var i = 0; i < Model.WorkExperiences.Count; i++)
+    {
+        <div class="form-group">
+            <label for="CompanyName">Company Name:</label>
+            <input asp-for="WorkExperiences[i].CompanyName" class="form-control" required placeholder="Company Name" />
+        </div>
+        <div class="form-group">
+            <label for="Position">Position:</label>
+            <input asp-for="WorkExperiences[i].Position" class="form-control" required placeholder="Position" />
+        </div>
+        <div class="form-group">
+            <label for="WorkLoad">Work Load:</label>
+            <select asp-for="WorkExperiences[i].WorkLoad" class="form-control" id="selectWorkLoadStatus" required>
+                <option value="Full Time">Full</option>
+                <option value="Part Time">Part</option>
+                <option value="Voluntary">Free</option>
+            </select>
+        </div>
+    }
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
