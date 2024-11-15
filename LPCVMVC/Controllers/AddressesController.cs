@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LPCVMVC.Data;
 using LatvijasPasts.Core.Models;
@@ -44,7 +39,7 @@ namespace LPCVMVC.Controllers
         }
 
         // GET: Addresses/Create
-        public IActionResult Create()
+        public IActionResult CreateAddress()
         {
             return View();
         }
@@ -54,26 +49,26 @@ namespace LPCVMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Country,City,Street,ZipCode,Id")] Address address)
+        public async Task<IActionResult> CreateAddress([Bind("Country,City,Street,ZipCode,Id")] Address address)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(address);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Edit", "Cvs", new { id = address.CvId });
             }
             return View(address);
         }
 
         // GET: Addresses/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditAddress(int? CvId)
         {
-            if (id == null)
+            if (CvId == null)
             {
                 return NotFound();
             }
 
-            var address = await _context.Addreses.FindAsync(id);
+            var address = await _context.Addreses.FirstOrDefaultAsync(x => x.CvId == CvId);
             if (address == null)
             {
                 return NotFound();
@@ -86,9 +81,9 @@ namespace LPCVMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Country,City,Street,ZipCode,Id")] Address address)
+        public async Task<IActionResult> EditAddress(int CvId, Address address)
         {
-            if (id != address.Id)
+            if (CvId != address.CvId)
             {
                 return NotFound();
             }
@@ -111,7 +106,7 @@ namespace LPCVMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Edit", "Cvs", new { address.CvId });
             }
             return View(address);
         }
@@ -151,7 +146,7 @@ namespace LPCVMVC.Controllers
 
         private bool AddressExists(int id)
         {
-            return _context.Addreses.Any(e => e.Id == id);
+            return _context.Addreses.Any(e => e.CvId == id);
         }
     }
 }

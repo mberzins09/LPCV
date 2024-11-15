@@ -13,7 +13,10 @@ namespace LPCVMVC.Controllers
         {
             _context = context;
         }
-
+        public IActionResult EditPersonalData(int CvId) => RedirectToAction("EditPersonalData", "PersonalDatas", new { CvId });
+        public IActionResult EditAddress(int CvId) => RedirectToAction("EditAddress", "Addresses", new { CvId });
+        public IActionResult EditEducation(int CvId) => RedirectToAction("EditEducation", "Educations", new { CvId });
+        public IActionResult EditWorkExperience(int CvId) => RedirectToAction("EditWorkExperiences", "WorkExperience", new { CvId });
         // GET: Cvs
         public async Task<IActionResult> Index()
         {
@@ -39,9 +42,24 @@ namespace LPCVMVC.Controllers
         }
 
         // GET: Cvs/Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
-            return View();
+            Cv cv = new Cv
+            {
+                PersonalData = new PersonalData(),
+                Address = new Address(),
+                Education = new Education(),
+                WorkExperience = new WorkExperience()
+            };
+            _context.Add(cv);
+            await _context.SaveChangesAsync();
+            cv.PersonalData.CvId = cv.Id;
+            cv.Address.CvId = cv.Id;
+            cv.Education.CvId = cv.Id;
+            cv.WorkExperience.CvId = cv.Id;
+
+
+            return View(cv);
         }
 
         // POST: Cvs/Create
@@ -61,14 +79,15 @@ namespace LPCVMVC.Controllers
         }
 
         // GET: Cvs/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        [HttpGet]
+        public async Task<IActionResult> Edit(int? CvId)
         {
-            if (id == null)
+            if (CvId == null)
             {
                 return NotFound();
             }
 
-            var cv = await _context.CVs.FindAsync(id);
+            var cv = await _context.CVs.FirstOrDefaultAsync(x=> x.Id == CvId);
             if (cv == null)
             {
                 return NotFound();
@@ -81,9 +100,9 @@ namespace LPCVMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id")] Cv cv)
+        public async Task<IActionResult> Edit(int CvId, [Bind("Id")] Cv cv)
         {
-            if (id != cv.Id)
+            if (CvId != cv.Id)
             {
                 return NotFound();
             }
@@ -148,5 +167,6 @@ namespace LPCVMVC.Controllers
         {
             return _context.CVs.Any(e => e.Id == id);
         }
+
     }
 }

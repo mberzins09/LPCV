@@ -1,30 +1,39 @@
 ﻿@model LatvijasPasts.Core.Models.Cv
 
-@{
+ @{
     ViewData["Title"] = "Create";
-}
+} 
 
-<h1>Create</h1>
+<h2>Create CV</h2>
 
-<h4>Cv</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <input type="button" value="Address" class="btn btn-primary" asp-controller="Addresses" asp-action="Create"/>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Create" method="post">
+    <div>
+        <label>CV Id:</label>
+        <input asp-for="Id" readonly />
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a type="button" class="btn btn-primary" 
+        asp-action="EditPersonalData"
+                asp-controller="Cvs"
+                asp-route-cvId="@Model.Id">Edit Personal Data</a>
+
+        <a type="button" class="btn btn-primary"
+                asp-action="EditAddress"
+                asp-controller="Cvs"
+                asp-route-cvId="@Model.Id">
+            Edit Address
+        </a>
+
+        <button type="button" onclick="location.href='@Url.Action("EditAddress", "Cv", new { cvId = Model.Id })'">Edit Address</button>
+        <button type="button" onclick="location.href='@Url.Action("EditEducation", "Cv", new { cvId = Model.Id })'">Edit Education</button>
+        <button type="button" onclick="location.href='@Url.Action("EditWorkExperience", "Cv", new { cvId = Model.Id })'">Edit Work Experience</button>
+    </div>
+
+    <div>
+        <button type="submit">Save CV</button>
+    </div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

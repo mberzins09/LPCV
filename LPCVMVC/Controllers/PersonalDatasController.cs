@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LPCVMVC.Data;
 using LatvijasPasts.Core.Models;
@@ -19,54 +14,29 @@ namespace LPCVMVC.Controllers
             _context = context;
         }
 
-        // GET: PersonalDatas
-        public async Task<IActionResult> Index()
-        {
-            return View(await _context.PersonalData.ToListAsync());
-        }
-
-        // GET: PersonalDatas/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var personalData = await _context.PersonalData
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (personalData == null)
-            {
-                return NotFound();
-            }
-
-            return View(personalData);
-        }
-
-        // GET: PersonalDatas/Create
+        // GET: Addresses/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: PersonalDatas/Create
+        // POST: Addresses/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("FirstName,LastName,Phone,Email,Id")] PersonalData personalData)
+        public async Task<IActionResult> Create([Bind("FirsName,LastName,Phone,Email,Id")] PersonalData data)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(personalData);
+                _context.Add(data);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(personalData);
+            return View(data);
         }
-
         // GET: PersonalDatas/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> EditPersonalData(int? id)
         {
             if (id == null)
             {
@@ -78,6 +48,7 @@ namespace LPCVMVC.Controllers
             {
                 return NotFound();
             }
+
             return View(personalData);
         }
 
@@ -86,7 +57,7 @@ namespace LPCVMVC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("FirstName,LastName,Phone,Email,Id")] PersonalData personalData)
+        public async Task<IActionResult> EditPersonalData(int id, [Bind("FirstName,LastName,Phone,Email,Id")] PersonalData personalData)
         {
             if (id != personalData.Id)
             {
@@ -111,8 +82,9 @@ namespace LPCVMVC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Edit", "Cv", new { id = personalData.CvId });
             }
+
             return View(personalData);
         }
 

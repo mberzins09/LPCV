@@ -4,6 +4,7 @@ namespace LatvijasPasts.Core.Models
 {
     public class PersonalData : Entity
     {
+        public int? CvId { get; set; }
         [MaxLength(50)]
         public string? FirstName { get; set; }
         [MaxLength(50)]

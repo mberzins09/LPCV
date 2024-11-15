@@ -4,25 +4,25 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+<h2>Edit CV</h2>
 
-<h4>Cv</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<form asp-action="Edit" method="post">
+    <div>
+        <label>CV Id:</label>
+        <input asp-for="Id" readonly />
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <button type="button" onclick="location.href='@Url.Action("EditPersonalData", "Cv", new { cvId = Model.Id })'">Edit Personal Data</button>
+        <button type="button" onclick="location.href='@Url.Action("EditAddress", "Cv", new { cvId = Model.Id })'">Edit Address</button>
+        <button type="button" onclick="location.href='@Url.Action("EditEducation", "Cv", new { cvId = Model.Id })'">Edit Education</button>
+        <button type="button" onclick="location.href='@Url.Action("EditWorkExperience", "Cv", new { cvId = Model.Id })'">Edit Work Experience</button>
+    </div>
+
+    <div>
+        <button type="submit">Save CV</button>
+    </div>
+</form>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
